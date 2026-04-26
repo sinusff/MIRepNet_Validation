@@ -121,10 +121,13 @@ For any questions or collaborations, please feel free to reach out via `liudingk
 If you find our repo or MIRepNet useful for your research, please cite us:
 ```
 @article{liu2026mirepnet,
-  title={MIRepNet: A Pipeline and Pre-trained Model for EEG-Based Motor Imagery Classification},
+  title={{MIR}ep{N}et: A Pipeline and Pre-trained Model for {EEG}-Based Motor Imagery Classification},
   author={Dingkun Liu and Zhu Chen and Jingwei Luo and Shijie Lian and Yuheng Chen and Shaojie Hou and Xiaolian Zhu and Dongrui Wu},
   journal={Knowledge-Based Systems},
+  volume = {343},
+  pages = {115966},
   year={2026},
-  publisher={Elsevier}
+  publisher={Elsevier},
+  doi = {https://doi.org/10.1016/j.knosys.2026.115966}
 }
 ```
