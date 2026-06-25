@@ -1,6 +1,6 @@
 
 # Data-Flow Map (Step 1.1)
-**Author:** Sina Feyzi
+**Author:** Sina Feizi
 
 ## How Data Flows in MIRepNet
 The pipeline starts from `finetune.py` which calls `run_experiment` (in `utils/utils.py`). 

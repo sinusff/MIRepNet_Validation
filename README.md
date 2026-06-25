@@ -1,5 +1,5 @@
 # MIRepNet Validation & New Dataset Project
-**Prepared by:** Sina Feyzi  
+**Prepared by:** Sina Feizi  
 **Supervisor:** Mohammad Nemati  
 
 ## Step 1.1 Environment Setup (Google Colab)
