@@ -1,0 +1,5 @@
+Data Source: MOABB - BNCI2014_004 (BCI Competition IV 2b)
+Number of Subjects: 9
+Number of Channels: 3 EEG channels (C3, Cz, C4) + 3 EOG channels
+Sampling Rate: 250 Hz
+Verification Note: Data verified and loaded dynamically via MOABB pipeline.
