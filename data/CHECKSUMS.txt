@@ -1,5 +1,67 @@
-Data Source: MOABB - BNCI2014_004 (BCI Competition IV 2b)
-Number of Subjects: 9
-Number of Channels: 3 EEG channels (C3, Cz, C4) + 3 EOG channels
-Sampling Rate: 250 Hz
-Verification Note: Data verified and loaded dynamically via MOABB pipeline.
+1. GENERAL METADATA & CITATION
+--------------------------------------------------------------------------------
+Dataset Code         : BNCI2014-004
+Dataset Name         : BCI Competition IV Dataset 2b (Graz Data Set B)
+Institution          : Graz University of Technology, Austria (2007)
+Authors              : R. Leeb, C. Brunner, G. R. Müller-Putz, A. Schlögl, 
+                       G. Pfurtscheller, F. Lee, C. Keinrath, R. Scherer, H. Bischof
+DOI                  : 10.1109/TNSRE.2007.906956
+Paper Reference      : Tangermann et al., 2012 (Review of BCI Competition IV)
+License              : Creative Commons Attribution-NoDerivatives 4.0 (CC BY-ND 4.0)
+
+2. EXPERIMENTAL PARADIGM & STIMULUS PROTOCOL
+--------------------------------------------------------------------------------
+Paradigm Type        : Cue-based 2-class Motor Imagery (Left Hand vs Right Hand)
+Subject Count        : 9 Healthy Subjects (Subject 1 to Subject 9)
+Class Labels         : Class 1 = 'left_hand', Class 2 = 'right_hand'
+Total Trial Window   : 7.5 seconds per trial
+
+Time Timeline Breakdown:
+  - t = 0.0s          : Black screen appears with a fixation cross (+) and 
+                        a short acoustic warning tone (1 kHz, 70 ms).
+  - t = 0.0s - 2.0s   : Fixation period (2.0 seconds).
+  - t = 2.0s          : Visual cue arrow appears pointing Left or Right.
+  - t = 2.0s - 3.25s  : Cue remains visible on screen (1.25 seconds).
+  - t = 2.0s - 7.5s   : Active Motor Imagery task execution window (5.5 seconds).
+  - t = 7.5s          : Trial ends, followed by a short randomized rest break.
+
+3. SESSIONS & RUN BREAKDOWN
+--------------------------------------------------------------------------------
+Total Sessions       : 5 sessions recorded on different days per subject.
+Session Categories   :
+  1. Screening Sessions (Sessions 1 & 2):
+     - Recorded without feedback.
+     - 6 runs per session, 20 trials per run (10 left, 10 right).
+     - 120 trials per session -> Total = 240 screening trials.
+  2. Feedback Sessions (Sessions 3, 4 & 5):
+     - Recorded with continuous online smiley feedback.
+     - 4 runs per session, 40 trials per run (20 left, 20 right).
+     - 160 trials per session -> Total = 480 feedback trials.
+
+Total Trials / Subj  : 720 trials (360 left_hand, 360 right_hand)
+Total Dataset Trials : 6,480 trials across all 9 subjects.
+
+4. HARDWARE & SIGNAL ACQUISITION SETTINGS
+--------------------------------------------------------------------------------
+EEG Channels (3)     : C3, Cz, C4 (Bipolar derivation placed according to 
+                       reduced standard 10-20 system).
+EOG Channels (3)     : 3 EOG channels recorded for eye artifact monitoring.
+Total Channels       : 6 recorded channels (3 EEG + 3 EOG).
+Sampling Frequency   : 250 Hz
+Hardware Bandpass    : 0.5 Hz - 100 Hz bandpass filter
+Notch Filter         : 50 Hz line noise notch filter
+Reference Electrode  : Left Mastoid
+Ground Electrode     : Right Mastoid
+
+5. HED (HIERARCHICAL EVENT DESCRIPTORS) ANNOTATION MAPPING
+--------------------------------------------------------------------------------
+Event 1 ('left_hand') : Sensory-event / Experimental-stimulus / Visual-presentation /
+                       Leftward Arrow -> Agent-action / Imagine / Move / Left Hand
+Event 2 ('right_hand'): Sensory-event / Experimental-stimulus / Visual-presentation /
+                       Rightward Arrow -> Agent-action / Imagine / Move / Right Hand
+
+6. PUBLISHED BENCHMARK PERFORMANCE CONTEXT (MOABB)
+--------------------------------------------------------------------------------
+Evaluation Context   : WithinSession accuracy across 19 standard BCI pipelines
+Accuracy Statistics  : Max: 82.67% | Median: 79.27% | Mean: 76.35% | Std: 5.28%
+Target Fine-tune Acc : ~82.36% ± 0.10 (MIRepNet Benchmark Target)
