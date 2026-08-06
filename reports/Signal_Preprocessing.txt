@@ -1,0 +1,74 @@
+Step 1.3 Technical Documentation: Signal Preprocessing and Dataset Generation for MIRepNet (BNCI2014004)
+
+1. Objective of Step 1.3
+
+The primary objective of this phase was to process the raw EEG signals from the
+BNCI2014004 dataset (comprising 9 subjects recorded across 3 channels: C3, Cz,
+C4) and transform them into standardized NumPy binary files:
+./data/BNCI2014004/X.npy and ./data/BNCI2014004/labels.npy. This pipeline
+ensures 100% structural and dimension compatibility with the dataset loader
+specified in the official MIRepNet codebase.
+
+2. Source Code Audit & Architectural Inferences (dataset.py & utils.py)
+
+Prior to implementing the preprocessing script, a deep audit of the repository's
+core files (dataset.py and utils/utils.py) revealed two critical architectural
+requirements:
+
+1.  Hardcoded Subject Index Slices: In dataset.py, the dataset loader for
+    BNCI2014004 operates on a monolithic concatenated array spanning 6,360
+    trials. Individual subject trials are extracted using fixed slice windows
+    defined in the subject_indices dictionary:
+
+      - Subject 1: Index 400:560 (160 trials)
+      - Subject 2: Index 1120:1240 (120 trials)
+      - Subject 3: Index 1800:1960 (160 trials)
+      - ... up to Subject 9: Index 6200:6360 (160 trials)
+
+2.  Runtime Execution Boundary (utils/utils.py): Contrary to initial
+    assumptions, the official pipeline executes Euclidean Alignment (EA) and
+    Channel Spatial Padding (pad_missing_channels_diff) dynamically on runtime
+    DataLoader batches inside process_and_replace_loader(). Consequently, X.npy
+    stored on disk must preserve the 3-channel input representation.
+
+3. Implemented Preprocessing Pipeline (preprocessing/build_npy.py)
+
+The preprocessing/build_npy.py script was implemented to execute the following
+sequential signal transformations:
+
+1.  Bandpass Filtering: Applied a 4th-order Butterworth bandpass filter in the
+    8–30 Hz frequency range (capturing motor cortex mu and beta rhythms).
+2.  Temporal Truncation: Sliced the time window to the first 1000 sampling
+    points (4.0 seconds @ 250 Hz).
+3.  Integer Label Encoding: Mapped string target labels into binary integers
+    (left_hand \to 0, right_hand \to 1).
+4.  Index Alignment Assembly: Placed each subject's processed trials into their
+    exact hardcoded index slice within the full 6,360-trial array.
+
+4. Sanity Validation via 2D t-SNE Analysis (plot_tsne.py)
+
+To validate the effectiveness of Euclidean Alignment (W = R^{-0.5}) in
+eliminating inter-subject covariance shift:
+
+1.  Feature Extraction: Computed the 3 \times 3 spatial covariance matrix per
+    trial across 5 subjects (Subject 1 to Subject 5).
+2.  2D Projection: Applied t-SNE (scikit-learn) on the spatial covariance
+    feature vectors before vs. after alignment.
+3.  Visual Verification:
+      - Before Alignment (Raw t-SNE): Trials from different subjects formed
+        distinct, isolated clusters in feature space (e.g., Subject 3 was
+        completely separated).
+      - After Alignment (Whitened t-SNE): All subject trial clusters completely
+        merged and overlapped in feature space. This visually demonstrates that
+        Euclidean Alignment effectively eliminates inter-subject domain shift.
+
+5. Final Step 1.3 Deliverables
+
+  - preprocessing/build_npy.py: Main preprocessing pipeline execution script.
+  - plot_tsne.py: t-SNE visualization script for Euclidean Alignment
+    verification.
+  - ./data/BNCI2014004/X.npy: Processed input signal array (Shape:
+    [6360, 3, 1000]).
+  - ./data/BNCI2014004/labels.npy: Processed target label array (Shape: [6360]).
+  - results/tsne_euclidean_alignment.png: Publication-grade t-SNE evaluation
+    figure.
